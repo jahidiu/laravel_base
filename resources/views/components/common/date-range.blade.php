@@ -17,7 +17,7 @@
         $endDate = '';
     }
 @endphp
-<div class="col-md-{{$column}} mb-4">
+<div class="col-md-{{$column}} mb-2">
     @if($label)
         <label class="form-label"><strong>{{$label}}</strong> <span class='text-danger'>{{$required ? "*" : ''}} </span></label>
     @endif

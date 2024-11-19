@@ -2,15 +2,15 @@
     'label' => '',
     'name' => '',
     'value' => '',
-    'placeholder' => '',
     'column' => '12',
-    'required' => false
+    'required' => false,
+    'extension' => 'image/png, image/jpeg',
 ])
-<div class="col-md-{{$column}} mb-4">
+<div class="col-md-{{$column}} mb-2">
     @if($label)
         <label class="form-label"><strong>{{$label}}</strong> <span class='text-danger'>{{$required ? "*" : ''}} </span></label>
     @endif
-    <input name="{{ $name }}" placeholder="{{$placeholder}}" {{$attributes->class(['form-control datepicker flatpickr-input'])->merge(['type' => 'text'])}} value="{{ $value }}" readonly="readonly">
+        <input name="{{ $name }}" id="formFile" {{$attributes->class(['form-control'])->merge(['type' => 'file'])}} accept="{{$extension}}" value="{{$value}}">
     @error($name)
         <div class="valid-feedback">{{$message}}</div>
     @enderror
