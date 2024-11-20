@@ -139,4 +139,47 @@ class BaseRepository implements EloquentRepositoryInterface
             }
         }
     }
+
+    public function getServerSideDataForSelectOption($search, $conditions = [], $searchColumns = [], $idColumn = 'id', $textColumn = null, $pagination = 10)
+    {
+        // Dynamically resolve the model using the given model name
+        $model = $this->model;
+        
+        // Start building the query
+        $items = $model::query();
+    
+        // Apply search filter if provided
+        if ($search != '') {
+            $items = $items->whereLike($searchColumns, $search);
+        }
+    
+        // Apply dynamic conditions (like bank_id, branch_id, etc.)
+        foreach ($conditions as $column => $value) {
+            if ($value) {
+                $items = $items->where($column, $value);
+            }
+        }
+    
+        // Paginate the results
+        $items = $items->paginate($pagination);
+    
+        // Prepare the response for select options
+        $response = [];
+        foreach ($items as $item) {
+            $response[] = [
+                'id'    => $item->{$idColumn}, // Dynamically set the ID
+                'text'  => $item->{$textColumn}, // Dynamically set the text
+            ];
+        }
+    
+        $data['results'] = $response;
+    
+        // If there are more results to paginate, add pagination information
+        if ($items->hasMorePages()) {
+            $data['pagination'] = ['more' => true];
+        }
+    
+        return $data;
+    }
+    
 }
