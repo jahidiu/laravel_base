@@ -15,7 +15,9 @@
     <select class="form-select valid" id="{{ $name }}" name="{{$name}}" aria-invalid="false">
         <option selected="" value="" disabled>{{$disableOptionText}}</option>
         @foreach($options as $option)
-            <option value="{{ gv($option, 'id') ?: '' }}" {{ !gv($option, 'id') ? 'disabled' : '' }} {{ old($name) == gv($option, 'id') ? '' : ($value == gv($option, 'id') ? 'selected' : '') }}>
+            <option value="{{ gv($option, 'id') ?: '' }}" 
+                    {{ gv($option, 'id') === null || gv($option, 'id') === '' ? 'disabled' : '' }} 
+                    {{ old($name) == gv($option, 'id') ? '' : ($value == gv($option, 'id') ? 'selected' : '') }}>
                 {{ gv($option, 'name') }}
             </option>
         @endforeach

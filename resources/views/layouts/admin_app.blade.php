@@ -12,9 +12,9 @@
     <meta content="Laravel" name="author" />
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{asset('assets/images/favicon.png')}}">
-    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+    <link href="{{asset('assets/plugins/flatpickr/flatpickr.min.css')}}" rel="stylesheet"/>
+    <link href="{{asset('assets/plugins/summernote/summernote.min.css')}}" rel="stylesheet"/>
     <link href="{{asset('assets/css/styles.css')}}" rel="stylesheet" type="text/css" />
-    <script src="{{asset('assets/js/fontawesome.js')}}" crossorigin="anonymous"></script>
 
     @stack('css')
 </head>
@@ -47,9 +47,13 @@
     </div>
 
     <!-- App js -->
+    <script src="{{asset('assets/js/jquery.min.js')}}"></script>
+    <script src="{{asset('assets/js/fontawesome.js')}}" crossorigin="anonymous"></script>
     <script src="{{asset('assets/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{asset('assets/plugins/flatpickr/flatpickr.js')}}"></script>
+    <script src="{{asset('assets/plugins/summernote/summernote.min.js')}}"></script>
     <script src="{{asset('assets/js/scripts.js')}}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+    <script src="{{asset('assets/js/custom.js')}}"></script>
     <script src="{{asset('assets/js/datatables-simple-demo.js')}}"></script>
 
     @stack('scripts')

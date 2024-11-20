@@ -15,6 +15,6 @@
 
 @push('scripts')
     <script>
-        textEditor($('#{{ $id }}'), 250);
+        textEditor($('#{{ $id }}'), 300);
     </script>
 @endpush
