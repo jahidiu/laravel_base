@@ -85,12 +85,17 @@ class BaseRepository implements EloquentRepositoryInterface
      * @param int $modelId
      * @return bool
      */
-    public function deleteById(int $modelId): bool
+    public function deleteById(int $modelId, array $relations = []): bool
     {
-        if (property_exists($this, 'deleteAble')) {
-            $this->deleteAble($modelId);
+        $model = $this->findById($modelId);
+        if (!$model) {
+            return false;
         }
-        return $this->findById($modelId)->delete();
+        foreach ($relations as $relation) {
+            $this->deleteRelatedModels($model, $relation);
+        }
+         // Finally, delete the main model
+        return $model->delete();
     }
 
     // Custom Function Start
@@ -102,5 +107,36 @@ class BaseRepository implements EloquentRepositoryInterface
     public function getByConditionOrder(array $conditions= [], array $relations = [], string $order= null )
     {
         return $this->model->where($conditions)->with($relations)->orderBy($order, 'asc')->get();
+    }
+
+    /**
+     * Delete related models for a given model.
+     *
+     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param string $relation The relationship to delete.
+     * @return void
+     */
+    protected function deleteRelatedModels(Model $model, string $relation): void
+    {
+        if (!method_exists($model, $relation)) {
+            return;
+        }
+
+        $relatedQuery = $model->{$relation}();
+
+        // If it's a 'hasMany', 'hasOne', or 'belongsToMany', delete related models
+        if ($relatedQuery instanceof \Illuminate\Database\Eloquent\Relations\HasMany) {
+            $relatedQuery->delete();  // Delete all related records
+        } elseif ($relatedQuery instanceof \Illuminate\Database\Eloquent\Relations\HasOne) {
+            $relatedQuery->delete();  // Delete the related record
+        } elseif ($relatedQuery instanceof \Illuminate\Database\Eloquent\Relations\BelongsToMany) {
+            $model->{$relation}()->detach();  // Detach many-to-many relationships (doesn't delete pivot data)
+        } elseif ($relatedQuery instanceof \Illuminate\Database\Eloquent\Relations\BelongsTo) {
+            // For a belongsTo relationship, delete the related model
+            $relatedModel = $model->{$relation};
+            if ($relatedModel) {
+                $relatedModel->delete();
+            }
+        }
     }
 }
