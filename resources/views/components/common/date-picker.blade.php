@@ -8,7 +8,7 @@
 ])
 <div class="col-md-{{$column}} mb-2">
     @if($label)
-        <label class="form-label"><strong>{{$label}}</strong> <span class='text-danger'>{{$required ? "*" : ''}} </span></label>
+        <label class="form-label">{{$label}} <span class='text-danger'>{{$required ? "*" : ''}} </span></label>
     @endif
     <input name="{{ $name }}" placeholder="{{$placeholder}}" {{$attributes->class(['form-control datepicker flatpickr-input'])->merge(['type' => 'text'])}} value="{{ $value }}" readonly="readonly">
     @error($name)

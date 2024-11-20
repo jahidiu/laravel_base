@@ -19,7 +19,7 @@
 @endphp
 <div class="col-md-{{$column}} mb-2">
     @if($label)
-        <label class="form-label"><strong>{{$label}}</strong> <span class='text-danger'>{{$required ? "*" : ''}} </span></label>
+        <label class="form-label">{{$label}} <span class='text-danger'>{{$required ? "*" : ''}} </span></label>
     @endif
     <div class="row">
         <div class="col-md-6">
