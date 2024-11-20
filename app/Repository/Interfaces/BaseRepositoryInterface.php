@@ -5,7 +5,7 @@ namespace App\Repository\Interfaces;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
-interface EloquentRepositoryInterface
+interface BaseRepositoryInterface
 {
     /**
      * Get all models
@@ -73,7 +73,9 @@ interface EloquentRepositoryInterface
     public function deleteById(int $modelId) : bool;
 
     // Custom Function Start
-    public function firstData(array $relations, array $conditions = [], array $columns);
+    public function firstData(array $relations, array $conditions, array $columns);
 
     public function getByConditionOrder(array $conditions, array $relations, string $order);
+
+    public function getServerSideDataForSelectOption(string $search, array $conditions, array $searchColumns, $idColumn, $textColumn, $pagination);
 }

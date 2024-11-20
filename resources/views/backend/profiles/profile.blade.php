@@ -2,7 +2,6 @@
 @section('title')
 My Account
 @endsection
-
 @section('content')
 <div class="container-fluid px-4">
     <h4 class="mt-4">My Account</h4>
@@ -13,6 +12,7 @@ My Account
                     <form method="POST" action="{{ route('profile_update') }}" class="text-start mb-3">
                         @csrf
                         <div class="row">
+                            <x-common.server-side-select :required="true" column=6 name="post" id="post" class="post" disableOptionText="Select Sample" label="Sample"></x-common.server-side-select>
                             <x-common.input :required="true" column=6 id="name" name="name" label="Name" placeholder="Name" :value="old('name',auth()->user()->name)"></x-common.input>
                             <x-common.input :required="true" column=6 id="username" name="username" label="Username" placeholder="Username" :value="old('name',auth()->user()->username)"></x-common.input>
                             <x-common.input :required="true" column=6 type="email" id="email" name="email" label="Email" placeholder="Email" :value="old('name',auth()->user()->email)" readonly></x-common.input>
@@ -27,3 +27,30 @@ My Account
     </div><!-- end row -->
 </div>
 @endsection
+
+@push('scripts')
+    <script>
+        (function($) {
+            "use strict";
+            $("#post").select2({
+                    ajax: {
+                        url: "{{route('post-select')}}",
+                        type: "get",
+                        dataType: 'json',
+                        delay: 250,
+                        data: function (params) {
+                                var query = {
+                                    search: params.term,
+                                    page: params.page || 1,
+                                }
+                                return query;
+                        },
+                        cache: false
+                    },
+                    escapeMarkup: function (m) {
+                        return m;
+                    }
+                });
+        })(jQuery);
+    </script>
+@endpush

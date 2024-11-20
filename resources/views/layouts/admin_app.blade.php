@@ -14,6 +14,7 @@
     <link rel="shortcut icon" href="{{asset('assets/images/favicon.png')}}">
     <link href="{{asset('assets/plugins/flatpickr/flatpickr.min.css')}}" rel="stylesheet"/>
     <link href="{{asset('assets/plugins/summernote/summernote.min.css')}}" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link href="{{asset('assets/css/styles.css')}}" rel="stylesheet" type="text/css" />
 
     @stack('css')
@@ -48,6 +49,7 @@
 
     <!-- App js -->
     <script src="{{asset('assets/js/jquery.min.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="{{asset('assets/js/fontawesome.js')}}" crossorigin="anonymous"></script>
     <script src="{{asset('assets/js/bootstrap.bundle.min.js')}}"></script>
     <script src="{{asset('assets/plugins/flatpickr/flatpickr.js')}}"></script>

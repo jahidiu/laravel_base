@@ -7,6 +7,10 @@ use App\Providers\RepositoryServiceProvider;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
+use App\Repository\Interfaces\BaseRepositoryInterface;
+use App\Repository\Eloquents\BaseRepository;
+use App\Repository\Interfaces\PostRepositoryInterface;
+use App\Repository\Eloquents\PostRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,6 +20,8 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->register(RepositoryServiceProvider::class);
+        $this->app->bind(BaseRepositoryInterface::class, BaseRepository::class);
+        $this->app->bind(PostRepositoryInterface::class, PostRepository::class);
     }
 
     /**

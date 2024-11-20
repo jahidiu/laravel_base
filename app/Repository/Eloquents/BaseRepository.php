@@ -2,11 +2,11 @@
 
 namespace App\Repository\Eloquents;
 
-use App\Repository\Interfaces\EloquentRepositoryInterface;
+use App\Repository\Interfaces\BaseRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
-class BaseRepository implements EloquentRepositoryInterface
+class BaseRepository implements BaseRepositoryInterface
 {
     /**
      * @var Model
@@ -147,7 +147,7 @@ class BaseRepository implements EloquentRepositoryInterface
         
         // Start building the query
         $items = $model::query();
-    
+    // dd($searchColumns);
         // Apply search filter if provided
         if ($search != '') {
             $items = $items->whereLike($searchColumns, $search);
