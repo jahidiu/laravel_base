@@ -27,7 +27,7 @@ class BaseRepository implements BaseRepositoryInterface
      */
     public function allDataTable(array $condition = [], array $columns = ['*'], array $relations = [])
     {
-        return $this->model->with($relations)->where($condition)->orderBy('id','asc');
+        return $this->model->with($relations)->where($condition)->orderBy('id', 'asc');
     }
 
     /**
@@ -37,7 +37,7 @@ class BaseRepository implements BaseRepositoryInterface
      */
     public function all(array $columns = ['*'], array $relations = []): Collection
     {
-        return $this->model->with($relations)->paginate(10,$columns);
+        return $this->model->with($relations)->paginate(10, $columns);
     }
 
     public function count(): int
@@ -54,7 +54,7 @@ class BaseRepository implements BaseRepositoryInterface
 
     public function getByCondition(array $condition, array $relations = [], array $columns = ['*']): Collection
     {
-        return $this->model->where($condition)->with($relations)->paginate(10,$columns);
+        return $this->model->where($condition)->with($relations)->paginate(10, $columns);
     }
 
     /**
@@ -103,17 +103,17 @@ class BaseRepository implements BaseRepositoryInterface
         foreach ($relations as $relation) {
             $this->deleteRelatedModels($model, $relation);
         }
-         // Finally, delete the main model
+        // Finally, delete the main model
         return $model->delete();
     }
 
     // Custom Function Start
-    public function firstData( array $relations = [], array $conditions = [] , array $columns = ['*'])
+    public function firstData(array $relations = [], array $conditions = [], array $columns = ['*'])
     {
         return $this->model->with($relations)->where($conditions)->select($columns)->first();
     }
 
-    public function getByConditionOrder(array $conditions= [], array $relations = [], string $order= null )
+    public function getByConditionOrder(array $conditions = [], array $relations = [], string $order = null)
     {
         return $this->model->where($conditions)->with($relations)->orderBy($order, 'asc')->get();
     }
@@ -153,25 +153,25 @@ class BaseRepository implements BaseRepositoryInterface
     {
         // Dynamically resolve the model using the given model name
         $model = $this->model;
-        
+
         // Start building the query
         $items = $model::query();
-    // dd($searchColumns);
+        // dd($searchColumns);
         // Apply search filter if provided
         if ($search != '') {
             $items = $items->whereLike($searchColumns, $search);
         }
-    
+
         // Apply dynamic conditions (like bank_id, branch_id, etc.)
         foreach ($conditions as $column => $value) {
             if ($value) {
                 $items = $items->where($column, $value);
             }
         }
-    
+
         // Paginate the results
         $items = $items->paginate($pagination);
-    
+
         // Prepare the response for select options
         $response = [];
         foreach ($items as $item) {
@@ -180,15 +180,15 @@ class BaseRepository implements BaseRepositoryInterface
                 'text'  => $item->{$textColumn}, // Dynamically set the text
             ];
         }
-    
+
         $data['results'] = $response;
-    
+
         // If there are more results to paginate, add pagination information
         if ($items->hasMorePages()) {
             $data['pagination'] = ['more' => true];
         }
-    
+
         return $data;
     }
-    
+
 }
